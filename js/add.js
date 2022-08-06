@@ -247,7 +247,7 @@ function reload(arr ,forToday , tomorrow , later) {
     later.innerHTML = ""
 
     let inpt =[]
-    let inpt1 = JSON.parse(localStorage.getItem("info_inp"))
+    let inpt1 = JSON.parse(localStorage.getItem("info_inp")) || []
     for(let item of arr){
         let block = document.createElement("div")
         let br1 = document.createElement("br")
