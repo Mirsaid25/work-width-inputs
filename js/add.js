@@ -241,13 +241,13 @@ let h2_2 = document.querySelector(".h2_2")
 let h2_3 = document.querySelector(".h2_3")
 
 
+let inpt = JSON.parse(localStorage.getItem("info_inp")) || []
+
 function reload(arr ,forToday , tomorrow , later) {
     forToday.innerHTML = ""
     tomorrow.innerHTML = ""
     later.innerHTML = ""
 
-    let inpt =[]
-    let inpt1 = JSON.parse(localStorage.getItem("info_inp")) || []
     for(let item of arr){
         let block = document.createElement("div")
         let br1 = document.createElement("br")
@@ -260,12 +260,7 @@ function reload(arr ,forToday , tomorrow , later) {
         block.classList.add("block")
 
         input.type = "checkbox"
-        for(let item2 of inpt1){
-            if(item2.id === item.id && item2.checked == true){
-                input.checked
-            }
-        }
-
+        inpt.filter(i=>(i.id === item.id)&&i.checked === true? input.checked = "checked" : "" )
 
         h3.innerHTML = "Buy S Plaid!"
         p.innerHTML = item.title
@@ -281,12 +276,17 @@ function reload(arr ,forToday , tomorrow , later) {
         }
 
         input.onchange=()=>{
-            console.log(input.checked , item.id);
             let lis = {
-                checked: input.checked,
-                id: item.id
+                id: item.id,
+                checked: input.checked
             }
-            inpt.push(lis)
+            let n = 0
+            inpt.filter(i=> (i.id === lis.id)? i.checked = lis.checked : n++)
+    
+            if(inpt.length === n){
+                inpt.push(lis)
+            }
+            
             localStorage.setItem("info_inp", JSON.stringify(inpt))
         }
     }
